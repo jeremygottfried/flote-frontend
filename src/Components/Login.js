@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { NavLink } from 'react-router-dom';
+import { Button, Checkbox, Form } from 'semantic-ui-react'
 
 export default class Login extends Component {
 
@@ -58,29 +59,32 @@ export default class Login extends Component {
 
   render(){
     const errors = <p>{this.state.errors}</p>
-    return (<div>
-      <NavLink to="/">Home</NavLink>
-      {errors}
-      <h2>Login</h2>
-      <form onSubmit={ this.handleSubmit }>
-        <label htmlFor="username">Username: </label>
-        <input type="text"
-          onChange={ this.handleChange }
-          value={ this.state.username }
-          name="username"
-          id="username" />
-        <br/><br/>
-        <label htmlFor="password">Password: </label>
-        <input
-          type="password"
-          onChange={ this.handleChange }
-          value={ this.state.password }
-          name="password"
-          id="password" />
-          <br/><br/>
-          <input disabled={this.state.is_disabled} type="submit" />
-      </form>
-    </div>)
+    return (
+      <Form onSubmit={ this.handleSubmit }>
+        <Form.Field>
+          <label>First Name</label>
+          <input placeholder='username'
+            type="text"
+            onChange={ this.handleChange }
+            value={ this.state.username }
+            name="username"
+            id="username" />
+        </Form.Field>
+        <Form.Field>
+          <label>password</label>
+          <input placeholder='password'
+            type="password"
+            onChange={ this.handleChange }
+            value={ this.state.password }
+            name="password"
+            id="password"/>
+        </Form.Field>
+        <Form.Field>
+          <Checkbox label='I agree to the Terms and Conditions' />
+        </Form.Field>
+        <Button type='submit'>Submit</Button>
+      </Form>
+    )
   }
 
 }
