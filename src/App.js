@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
+import { Route, Link, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import Login from './Components/Login'
 import Home from './Components/Home'
@@ -13,7 +13,7 @@ class App extends Component {
   }
 
   logout = (event) => {
-    
+
   }
 
   render() {

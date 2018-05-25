@@ -7,7 +7,8 @@ export default class RegistrationForm extends Component {
     name: "",
     username: "",
     password: "",
-    errors: ""
+    errors: "",
+    is_disabled: true,
   }
 
   handleSubmit = (event) => {
@@ -45,9 +46,23 @@ export default class RegistrationForm extends Component {
 
   handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+    }, () => {
+      if(this.state.username.length > 0 && this.state.password.length > 0 && this.state.name.length > 0){
+        this.setState({
+          is_disabled: false
+        })
+      }
+        else{
+          this.setState({is_disabled: true})
+        }
     })
   }
+  // handleChange = (event) => {
+  //   this.setState({
+  //     [event.target.name]: event.target.value
+  //   })
+  // }
 
   render(){
     const errors = <p>{this.state.errors}</p>
@@ -78,7 +93,7 @@ export default class RegistrationForm extends Component {
           name="password"
           id="password" />
         <br/><br/>
-        <input type="submit" />
+        <input disabled={this.state.is_disabled} type="submit" />
       </form>
     </div>)
   }
