@@ -4,9 +4,10 @@ import { NavLink } from 'react-router-dom';
 export default class RegistrationForm extends Component {
 
   state = {
+    name: "",
     username: "",
     password: "",
-    name: ""
+    errors: ""
   }
 
   handleSubmit = (event) => {
@@ -17,14 +18,10 @@ export default class RegistrationForm extends Component {
   }
 
   register = ({name, username, password}) => {
-    fetch('http://localhost:4000/users', {
+    fetch('http://localhost:4000/register', {
       method: 'POST',
       body:
-        JSON.stringify({
-          name: name,
-          username: username,
-          password: password
-        })
+        JSON.stringify({ name, username, password})
       ,
       headers: {
         'Content-Type': "application/json",
@@ -33,11 +30,16 @@ export default class RegistrationForm extends Component {
     })
     .then(res => res.json())
     .then(json => {
-      console.log(json);
-      // localStorage.setItem('token', json.token),
-      // localStorage.setItem('user_id', json.user_id),
-      // localStorage.setItem('username', json.username)
-      // this.props.history.push(`/notes`)
+      if(json.token){
+        console.log(json);
+        localStorage.setItem('token', json.token),
+        localStorage.setItem('user_id', json.user_id),
+        localStorage.setItem('username', json.username)
+        this.props.history.push(`/notes`)
+      } else{
+        this.setState({errors: "Mistake"})
+      }
+
     })
   }
 
@@ -48,8 +50,10 @@ export default class RegistrationForm extends Component {
   }
 
   render(){
+    const errors = <p>{this.state.errors}</p>
     return (<div>
       <NavLink to="/">Home</NavLink>
+      {errors}
       <h2>Registration Form</h2>
       <form onSubmit={ this.handleSubmit }>
       <label htmlFor="name">Name: </label>

@@ -18,7 +18,8 @@ export default class NotesContainer extends Component {
       }}
     )
     .then(res => res.json())
-    .then(noteArr => {this.setState({notes: noteArr})})
+    .then(noteArr => {
+      this.setState({notes: noteArr})})
   }
 
   renderNotes = () => {

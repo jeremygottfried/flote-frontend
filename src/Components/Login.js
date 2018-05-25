@@ -6,6 +6,7 @@ export default class Login extends Component {
   state = {
     username: "",
     password: "",
+    errors: "",
   }
 
   handleSubmit = (event) => {
@@ -19,10 +20,7 @@ export default class Login extends Component {
     fetch('http://localhost:4000/login', {
       method: 'POST',
       body:
-        JSON.stringify({
-          username: username,
-          password: password
-        })
+        JSON.stringify({username, password})
       ,
       headers: {
         'Content-Type': "application/json",
@@ -31,10 +29,14 @@ export default class Login extends Component {
     })
     .then(res => res.json())
     .then(json => {
+      if(json.token){
       localStorage.setItem('token', json.token),
       localStorage.setItem('user_id', json.user_id),
       localStorage.setItem('username', json.username)
       this.props.history.push(`/notes`)
+    } else{
+      this.setState({errors: "Mistake"})
+    }
     })
   }
 
@@ -45,8 +47,10 @@ export default class Login extends Component {
   }
 
   render(){
+    const errors = <p>{this.state.errors}</p>
     return (<div>
       <NavLink to="/">Home</NavLink>
+      {errors}
       <h2>Login</h2>
       <form onSubmit={ this.handleSubmit }>
         <label htmlFor="username">Username: </label>
