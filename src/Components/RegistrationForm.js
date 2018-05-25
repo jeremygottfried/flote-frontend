@@ -1,25 +1,27 @@
 import React, {Component} from 'react'
 import { NavLink } from 'react-router-dom';
 
-export default class Login extends Component {
+export default class RegistrationForm extends Component {
 
   state = {
     username: "",
     password: "",
+    name: ""
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { username, password } = this.state;
-    const auth = { username, password };
-    this.login(auth)
+    const { name, username, password } = this.state;
+    const auth = { name, username, password };
+    this.register(auth)
   }
 
-  login = ({username, password}) => {
-    fetch('http://localhost:4000/login', {
+  register = ({name, username, password}) => {
+    fetch('http://localhost:4000/users', {
       method: 'POST',
       body:
         JSON.stringify({
+          name: name,
           username: username,
           password: password
         })
@@ -31,10 +33,11 @@ export default class Login extends Component {
     })
     .then(res => res.json())
     .then(json => {
-      localStorage.setItem('token', json.token),
-      localStorage.setItem('user_id', json.user_id),
-      localStorage.setItem('username', json.username)
-      this.props.history.push(`/notes`)
+      console.log(json);
+      // localStorage.setItem('token', json.token),
+      // localStorage.setItem('user_id', json.user_id),
+      // localStorage.setItem('username', json.username)
+      // this.props.history.push(`/notes`)
     })
   }
 
@@ -47,8 +50,15 @@ export default class Login extends Component {
   render(){
     return (<div>
       <NavLink to="/">Home</NavLink>
-      <h2>Login</h2>
+      <h2>Registration Form</h2>
       <form onSubmit={ this.handleSubmit }>
+      <label htmlFor="name">Name: </label>
+      <input type="text"
+        onChange={ this.handleChange }
+        value={ this.state.name }
+        name="name"
+        id="name" />
+        <br/><br/>
         <label htmlFor="username">Username: </label>
         <input type="text"
           onChange={ this.handleChange }
@@ -63,8 +73,8 @@ export default class Login extends Component {
           value={ this.state.password }
           name="password"
           id="password" />
-          <br/><br/>
-          <input type="submit" />
+        <br/><br/>
+        <input type="submit" />
       </form>
     </div>)
   }
