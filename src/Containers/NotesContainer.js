@@ -18,7 +18,8 @@ export default class NotesContainer extends Component {
   }
 
 
-  onReceived (note) {
+  onReceived = (note) => {
+
       this.setState({
           notes: [
               ...this.state.notes,
@@ -53,7 +54,7 @@ export default class NotesContainer extends Component {
       <div>
       <ActionCable ref='noteChannel' channel={{channel: 'NoteChannel', room: '1', username: 'jeremy'}} onReceived={this.onReceived} />
       <input ref='newMessage' type='text' />
-      <button onClick={this.sendMessage}>Send</button>
+      <button onClick={this.sendMessage}>Create New Note</button>
     <Card.Group centered >{this.renderNotes()}</Card.Group>
     </div>
   )
