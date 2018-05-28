@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
+import { Card } from 'semantic-ui-react'
 
 export default class Note extends Component {
   render(){
     return(
-      <div>
-        <h4>{this.props.note.body}</h4>
-      </div>
+      <Card>
+        <Card.Content>{this.props.note.body}</Card.Content>
+      </Card>
     )
   }
 }
