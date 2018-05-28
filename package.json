@@ -5,6 +5,7 @@
   "dependencies": {
     "gulp": "^3.9.1",
     "react": "^16.4.0",
+    "react-actioncable-provider": "^1.0.3",
     "react-dom": "^16.4.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",

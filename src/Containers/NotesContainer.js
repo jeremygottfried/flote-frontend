@@ -50,10 +50,12 @@ export default class NotesContainer extends Component {
 
   render(){
     return (
+      <div>
       <ActionCable ref='noteChannel' channel={{channel: 'NoteChannel', room: '1', username: 'jeremy'}} onReceived={this.onReceived} />
       <input ref='newMessage' type='text' />
       <button onClick={this.sendMessage}>Send</button>
     <Card.Group centered >{this.renderNotes()}</Card.Group>
+    </div>
   )
   }
 
