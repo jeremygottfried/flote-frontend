@@ -16,6 +16,7 @@ export default class Login extends Component {
     const { username, password } = this.state;
     const auth = { username, password };
     this.login(auth)
+    this.props.refresh()
   }
 
   login = ({username, password}) => {
@@ -35,7 +36,7 @@ export default class Login extends Component {
       localStorage.setItem('token', json.token),
       localStorage.setItem('user_id', json.user_id),
       localStorage.setItem('username', json.username)
-      this.props.history.push(`/notes`)
+      // this.props.history.push(`/notes`)
     } else{
       this.setState({errors: "Mistake"})
     }
