@@ -34,8 +34,8 @@ class App extends Component {
           </Menu>
         </header>
           <Switch>
+            {this.loggedIn() ? <Route path='/' render={(props) => (<NotesContainer logout={this.logout} {...props}></NotesContainer>)}></Route> : <Route path="/" exact render={(props) => (<Home refresh={this.refresh}></Home>)}></Route>}
 
-            <Route path="/" exact render={(props) => (<Home refresh={this.refresh}></Home>)}></Route>
             <Route path="/login" render={(props => (<Login {...props}></Login>) )}></Route>
             <Route path="/register" render={(props => (<RegistrationForm {...props}></RegistrationForm>) )}></Route>
             {this.loggedIn() ?
