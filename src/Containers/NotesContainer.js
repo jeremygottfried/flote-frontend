@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom';
 import Note from '../Components/Note'
+import { Card } from 'semantic-ui-react'
 
 export default class NotesContainer extends Component {
 
@@ -28,17 +29,8 @@ export default class NotesContainer extends Component {
     })
   }
 
-  logout = () => {
-    localStorage.clear()
-    this.props.history.push("/")
-  }
-
   render(){
-    return (<div>
-      {this.renderNotes()}
-      <button onClick={this.logout}>Log Out</button>
-      </div>
-    )
+    return <Card.Group centered >{this.renderNotes()}</Card.Group>
   }
 
 }

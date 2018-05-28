@@ -62,7 +62,7 @@ export default class Login extends Component {
     return (
       <Form onSubmit={ this.handleSubmit }>
         <Form.Field>
-          <label>First Name</label>
+          <label>Username</label>
           <input placeholder='username'
             type="text"
             onChange={ this.handleChange }
@@ -71,7 +71,7 @@ export default class Login extends Component {
             id="username" />
         </Form.Field>
         <Form.Field>
-          <label>password</label>
+          <label>Password</label>
           <input placeholder='password'
             type="password"
             onChange={ this.handleChange }
@@ -79,9 +79,7 @@ export default class Login extends Component {
             name="password"
             id="password"/>
         </Form.Field>
-        <Form.Field>
-          <Checkbox label='I agree to the Terms and Conditions' />
-        </Form.Field>
+
         <Button type='submit'>Submit</Button>
       </Form>
     )

@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
-import { NavLink } from 'react-router-dom';
-
+import {Form, Checkbox, Button} from 'semantic-ui-react'
 export default class RegistrationForm extends Component {
 
   state = {
@@ -66,35 +65,41 @@ export default class RegistrationForm extends Component {
 
   render(){
     const errors = <p>{this.state.errors}</p>
-    return (<div>
-      <NavLink to="/">Home</NavLink>
+    return (
+      <div>
       {errors}
-      <h2>Registration Form</h2>
-      <form onSubmit={ this.handleSubmit }>
-      <label htmlFor="name">Name: </label>
-      <input type="text"
-        onChange={ this.handleChange }
-        value={ this.state.name }
-        name="name"
-        id="name" />
-        <br/><br/>
-        <label htmlFor="username">Username: </label>
-        <input type="text"
-          onChange={ this.handleChange }
-          value={ this.state.username }
-          name="username"
-          id="username" />
-        <br/><br/>
-        <label htmlFor="password">Password: </label>
-        <input
-          type="password"
-          onChange={ this.handleChange }
-          value={ this.state.password }
-          name="password"
-          id="password" />
-        <br/><br/>
-        <input disabled={this.state.is_disabled} type="submit" />
-      </form>
+      <Form onSubmit={ this.handleSubmit }>
+        <Form.Field>
+          <label htmlFor="name">Name </label>
+          <input placeholder='name' type="text"
+            onChange={ this.handleChange }
+            value={ this.state.name }
+            name="name"
+            id="name" />
+        </Form.Field>
+        <Form.Field>
+          <label htmlFor="username">Username </label>
+          <input placeholder='username' type="text"
+            onChange={ this.handleChange }
+            value={ this.state.username }
+            name="username"
+            id="username" />
+        </Form.Field>
+        <Form.Field>
+          <label htmlFor="password">Password </label>
+          <input
+            placeholder='password'
+            type="password"
+            onChange={ this.handleChange }
+            value={ this.state.password }
+            name="password"
+            id="password" />
+        </Form.Field>
+        <Form.Field>
+          <Checkbox label='I agree to the Terms and Conditions' />
+        </Form.Field>
+        <Button disabled={this.state.is_disabled} type="submit">Submit</Button>
+      </Form>
     </div>)
   }
 
