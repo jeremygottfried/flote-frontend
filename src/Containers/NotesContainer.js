@@ -10,7 +10,8 @@ export default class NotesContainer extends Component {
   }
 
   onEdit = (note) => {
-    console.log(note)
+
+    console.log('hit')
     // if (note.user !== localStorage.getItem('username'))
 
     this.setState(
@@ -52,7 +53,7 @@ export default class NotesContainer extends Component {
     )
     .then(res => res.json())
     .then(noteArr => {
-
+      console.log(noteArr[0].notes)
       this.setState({notes: noteArr[0].notes})})
   }
 
