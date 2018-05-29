@@ -42,7 +42,8 @@ export default class NoteWrapper extends Component {
       this.refs.realTimeTypingChannel.send({body, room, id, index})
   }
 
-  SendEdit = () => {
+  SendEdit = (event) => {
+    console.log(event)
     const note = this.state.body
     const room = 'note_1'
     const id = this.props.note.id
@@ -52,8 +53,9 @@ export default class NoteWrapper extends Component {
   render() {
     return(
 
-      <Modal onActionClick={this.SendEdit} className="modal" size="fullscreen" trigger={
+      <Modal onClose={this.SendEdit} className="modal" size="fullscreen" trigger={
         <Card>
+
           <ActionCable ref='realTimeTypingChannel' channel={{channel: 'RealTimeTypingChannel', room: this.props.note.id, username: 'jeremy'}} onReceived={this.props.onEdit} />
           <ActionCable ref='editChannel' channel={{channel: 'EditChannel', room: this.props.note.id, username: 'jeremy'}} />
           <Card.Content>{this.state.body}</Card.Content>
