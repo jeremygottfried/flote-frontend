@@ -1,11 +1,11 @@
 import React, { Component} from 'react';
-import { NavLink, Route, Link, Switch, Redirect } from 'react-router-dom';
+import { NavLink, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import Login from './Components/Login'
 import Home from './Components/Home'
 import RegistrationForm from './Components/RegistrationForm'
 import NotesContainer from './Containers/NotesContainer'
-import {Button, Menu} from 'semantic-ui-react'
+import {Menu} from 'semantic-ui-react'
 
 class App extends Component {
   loggedIn = () => {
