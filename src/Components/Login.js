@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { NavLink } from 'react-router-dom';
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 
 export default class Login extends Component {
 
@@ -16,7 +16,6 @@ export default class Login extends Component {
     const { username, password } = this.state;
     const auth = { username, password };
     this.login(auth)
-    this.props.refresh()
   }
 
   login = ({username, password}) => {
@@ -36,7 +35,7 @@ export default class Login extends Component {
       localStorage.setItem('token', json.token),
       localStorage.setItem('user_id', json.user_id),
       localStorage.setItem('username', json.username)
-      // this.props.history.push(`/notes`)
+      this.props.refresh()
     } else{
       this.setState({errors: "Mistake"})
     }

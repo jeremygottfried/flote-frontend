@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom';
 import Note from '../Components/Note'
-import { Card } from 'semantic-ui-react'
+import { Card, Modal, Button, Image, Header } from 'semantic-ui-react'
 import {ActionCable} from 'react-actioncable-provider'
 
 export default class NotesContainer extends Component {
@@ -52,11 +51,14 @@ export default class NotesContainer extends Component {
   render(){
     return (
       <div>
-      <ActionCable ref='noteChannel' channel={{channel: 'NoteChannel', room: '1', username: 'jeremy'}} onReceived={this.onReceived} />
-      <input ref='newMessage' type='text' />
-      <button onClick={this.sendMessage}>Create New Note</button>
-    <Card.Group centered >{this.renderNotes()}</Card.Group>
-    </div>
+        <ActionCable ref='noteChannel' channel={{channel: 'NoteChannel', room: '1', username: 'jeremy'}} onReceived={this.onReceived} />
+        <input ref='newMessage' type='text' />
+        <button onClick={this.sendMessage}>Create New Note</button>
+
+        <Card.Group centered >
+          {this.renderNotes()}
+        </Card.Group>
+      </div>
   )
   }
 
