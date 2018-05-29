@@ -40,7 +40,8 @@ export default class NotesContainer extends Component {
     )
     .then(res => res.json())
     .then(noteArr => {
-      this.setState({notes: noteArr})})
+
+      this.setState({notes: noteArr[0].notes})})
   }
 
   renderNotes = () => {
