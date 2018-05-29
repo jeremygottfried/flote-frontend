@@ -13,7 +13,17 @@ export default class NoteWrapper extends Component {
   )
 
   }
-
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.note.body !== this.props.note.body) {
+      this.setState(
+        {
+          body: nextProps.note.body
+        }
+      )
+      return true
+    }
+    return false
+  }
   sendMessage = (note) => {
       const body = note
       const room = 'edit_1'
