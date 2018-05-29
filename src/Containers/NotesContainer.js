@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Note from '../Components/Note'
+import NoteWrapper from '../Components/NoteWrapper'
 import { Card, Modal, Button, Image, Header } from 'semantic-ui-react'
 import {ActionCable} from 'react-actioncable-provider'
 
@@ -7,6 +7,19 @@ export default class NotesContainer extends Component {
 
   state = {
     notes: []
+  }
+
+  onEdit = (note) => {
+    console.log(note)
+    // if (note.user !== localStorage.getItem('username'))
+
+    this.setState(
+      {
+        notes:  [...this.state.notes.slice(0, note.index),
+           note,
+           ...this.state.notes.slice(note.index + 1)]
+      }, console.log(this.state.notes[note.index])
+    )
   }
 
   sendMessage = () => {
@@ -20,15 +33,15 @@ export default class NotesContainer extends Component {
   onReceived = (note) => {
 
       this.setState({
-          notes: [
-              ...this.state.notes,
-              note
+          notes: [note,
+              ...this.state.notes
           ]
       })
       console.log(note)
   }
 
   componentDidMount = () => {
+
     let user_id = localStorage.getItem('user_id')
     let token = localStorage.getItem('token')
     fetch(`http://localhost:4000/user/${user_id}/notes`, {
@@ -44,8 +57,8 @@ export default class NotesContainer extends Component {
   }
 
   renderNotes = () => {
-    return this.state.notes.map((note) => {
-      return <Note key={note.id} note={note}></Note>
+    return this.state.notes.map((note, index) => {
+      return <NoteWrapper onEdit={this.onEdit} id={index} key={note.id} note={note}></NoteWrapper>
     })
   }
 
