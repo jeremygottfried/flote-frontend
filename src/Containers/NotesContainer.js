@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import NoteWrapper from '../Components/NoteWrapper'
+import NewNoteCard from '../Components/NewNoteCard'
 import { Card } from 'semantic-ui-react'
 import {ActionCable} from 'react-actioncable-provider'
 
@@ -26,8 +27,8 @@ export default class NotesContainer extends Component {
     )
   }
 
-  sendMessage = () => {
-      const note = this.refs.newMessage.value
+  sendMessage = (body) => {
+      const note = body
       const room = 'note_1'
       // Call perform or send
       this.refs.noteChannel.send({note, room})
@@ -60,8 +61,10 @@ export default class NotesContainer extends Component {
   }
 
   renderNotes = () => {
-    return this.state.notes.map((note, index) => {
-      return <NoteWrapper onEdit={this.onEdit} id={index} key={note.id} note={note} onDelete={this.onDelete}></NoteWrapper>
+
+    return this.state.notes.filter(note => note.body.toLowerCase().includes(this.props.query.toLowerCase())).sort().map((note, index) => {
+      console.log(note)
+      return <NoteWrapper onEdit={this.onEdit} id={note.id} key={index} note={note} onDelete={this.onDelete}></NoteWrapper>
     })
   }
 
@@ -69,9 +72,8 @@ export default class NotesContainer extends Component {
     return (
       <div>
         <ActionCable ref='noteChannel' channel={{channel: 'NoteChannel', room: `${localStorage.getItem('user_id')}`, username: `${localStorage.getItem('username')}`}} onReceived={this.onReceived} />
-        <input ref='newMessage' type='text' />
-        <button onClick={this.sendMessage}>Create New Note</button>
-        <Card.Group centered >
+        <Card.Group centered className='notegroup'>
+          <NewNoteCard createCard={this.sendMessage}/>
           {this.renderNotes()}
         </Card.Group>
       </div>

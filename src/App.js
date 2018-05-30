@@ -5,9 +5,12 @@ import Login from './Components/Login'
 import Home from './Components/Home'
 import RegistrationForm from './Components/RegistrationForm'
 import NotesContainer from './Containers/NotesContainer'
-import {Menu} from 'semantic-ui-react'
+import {Menu, Input} from 'semantic-ui-react'
 
 class App extends Component {
+  state = {
+    query: ''
+  }
   loggedIn = () => {
     return localStorage.getItem('token') !== null
   }
@@ -17,6 +20,11 @@ class App extends Component {
   logout = (event) => {
     localStorage.clear()
     this.forceUpdate()
+  }
+  searchChange = (event) => {
+    this.setState({
+      query: event.target.value
+    })
   }
 
   render() {
@@ -29,17 +37,19 @@ class App extends Component {
               {this.loggedIn() ? <NavLink to="/notes"><h1>Flote</h1></NavLink> : <NavLink to="/"><h1>Flote</h1></NavLink> }
             </Menu.Item>
             <Menu.Menu position='right'>
+
+              {this.loggedIn() ? <Input className='search' placeholder='Search...' value={this.state.query} onChange={this.searchChange}/> : null }
               {this.loggedIn() ? <Menu.Item name='logout' onClick={this.logout} /> : null }
             </Menu.Menu>
           </Menu>
         </header>
           <Switch>
-            {this.loggedIn() ? <Route path='/' render={(props) => (<NotesContainer logout={this.logout} {...props}></NotesContainer>)}></Route> : <Route path="/" exact render={(props) => (<Home refresh={this.refresh}></Home>)}></Route>}
+            {this.loggedIn() ? <Route path='/' render={(props) => (<NotesContainer logout={this.logout} query={this.state.query} {...props}></NotesContainer>)}></Route> : <Route path="/" exact render={(props) => (<Home refresh={this.refresh}></Home>)}></Route>}
 
             <Route path="/login" render={(props => (<Login {...props}></Login>) )}></Route>
             <Route path="/register" render={(props => (<RegistrationForm {...props}></RegistrationForm>) )}></Route>
             {this.loggedIn() ?
-              <Route path='/notes' render={(props) => (<NotesContainer logout={this.logout} {...props}></NotesContainer>)}></Route>
+              <Route path='/notes' render={(props) => (<NotesContainer logout={this.logout} query={this.state.query} {...props}></NotesContainer>)}></Route>
                 :
               <Redirect to="/"></Redirect>}
           </Switch>

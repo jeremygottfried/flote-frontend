@@ -43,9 +43,6 @@ export default class NoteWrapper extends Component {
 
   SendEdit = (event) => {
     console.log(event)
-    this.setState({
-      isOpen: false
-    })
     const note = this.state.body
     const room = 'note_1'
     const id = this.props.note.id
@@ -59,7 +56,7 @@ export default class NoteWrapper extends Component {
   }
   render() {
     return(
-        <Modal open={this.state.isOpen} honMount={console.log('hit')} onClose={this.SendEdit} className="modal" size="fullscreen" trigger={
+        <Modal onClose={this.SendEdit} className="modal" size="fullscreen" trigger={
           <Card className="wrap">
             <ActionCable ref='realTimeTypingChannel' channel={{channel: 'RealTimeTypingChannel', room: this.props.note.id, username: `${localStorage.getItem('username')}`}} onReceived={this.props.onEdit} />
             <ActionCable ref='editChannel' channel={{channel: 'EditChannel', room: this.props.note.id, username: `${localStorage.getItem('username')}`}} />
