@@ -52,6 +52,7 @@ i:hover {
     color: red;
 }
 .notegroup {
+  margin-top: 63px;
   bottom:auto;
   position: relative;
   clear:both;

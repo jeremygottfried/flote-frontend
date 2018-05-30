@@ -6,7 +6,9 @@ export default class RegistrationForm extends Component {
     name: "",
     username: "",
     password: "",
+    passwordConfirmation: "",
     errors: "",
+    accept: false,
     is_disabled: true,
   }
 
@@ -44,25 +46,28 @@ export default class RegistrationForm extends Component {
   }
 
   handleChange = (event) => {
+    if (!event.target.name) {
+      this.setAccept()
+    } else {
     this.setState({
       [event.target.name]: event.target.value,
-    }, () => {
-      if(this.state.username.length > 0 && this.state.password.length > 0 && this.state.name.length > 0){
-        this.setState({
-          is_disabled: false
-        })
-      }
-        else{
-          this.setState({is_disabled: true})
-        }
-    })
+    }, this.enabler)
   }
-  // handleChange = (event) => {
-  //   this.setState({
-  //     [event.target.name]: event.target.value
-  //   })
-  // }
-
+  }
+  enabler = () => {
+    if(this.state.username.length > 0 && this.state.password.length > 0 && this.state.name.length > 0 && (this.state.password === this.state.passwordConfirmation) && this.state.accept){
+      this.setState({
+        is_disabled: false
+      })
+    } else {
+        this.setState({is_disabled: true})
+      }
+  }
+  setAccept = () => {
+    this.setState({
+      accept: !this.state.accept
+    }, this.enabler)
+  }
   render(){
     const errors = <p>{this.state.errors}</p>
     return (
@@ -96,11 +101,20 @@ export default class RegistrationForm extends Component {
             id="password" />
         </Form.Field>
         <Form.Field>
-          <Checkbox label='I agree to the Terms and Conditions' />
+          <label htmlFor="password">Password </label>
+          <input
+            placeholder='password confirmation'
+            type="password"
+            onChange={ this.handleChange }
+            value={ this.state.passwordConfirmation }
+            name="passwordConfirmation"
+            id="passwordConfirmation" />
+        </Form.Field>
+        <Form.Field>
+          <Checkbox label='I agree to the Terms and Conditions' onChange={this.handleChange}/>
         </Form.Field>
         <Button disabled={this.state.is_disabled} type="submit">Submit</Button>
       </Form>
     </div>)
   }
-
 }

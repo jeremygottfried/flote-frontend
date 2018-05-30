@@ -12,13 +12,16 @@ export default class NewNoteCard extends Component {
   }
   create = () => {
     this.props.createCard(this.state.body)
+    this.clear()
+  }
+  clear = () => {
     this.setState({
       body: ''
     })
   }
   render(){
     return(
-      <Modal onClose={this.state.body ? this.create : null} className="modal" size="fullscreen" trigger={
+      <Modal onClose={this.state.body.trim() ? this.create : this.clear} className="modal" size="fullscreen" trigger={
         <Card className="wrap">
           <Card.Content><i className="large add icon"></i><Card.Description textAlign='center'>Add A New Note</Card.Description></Card.Content>
         </Card>
