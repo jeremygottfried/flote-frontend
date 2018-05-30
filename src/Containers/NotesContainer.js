@@ -9,13 +9,16 @@ export default class NotesContainer extends Component {
     notes: []
   }
 
+  onDelete = (id) =>{
+    const index = this.state.notes.filter(note => note.id === id)
+    this.setState({
+      notes: [...this.state.notes.slice(0,index), ...this.state.notes.slice(index+1)]
+    })
+  }
+
   onEdit = (note) => {
-
-    console.log('hit')
     // if (note.user !== localStorage.getItem('username'))
-
-    this.setState(
-      {
+    this.setState({
         notes:  [...this.state.notes.slice(0, note.index),
            note,
            ...this.state.notes.slice(note.index + 1)]
@@ -32,7 +35,6 @@ export default class NotesContainer extends Component {
 
 
   onReceived = (note) => {
-
       this.setState({
           notes: [note,
               ...this.state.notes
@@ -59,7 +61,7 @@ export default class NotesContainer extends Component {
 
   renderNotes = () => {
     return this.state.notes.map((note, index) => {
-      return <NoteWrapper onEdit={this.onEdit} id={index} key={note.id} note={note}></NoteWrapper>
+      return <NoteWrapper onEdit={this.onEdit} id={index} key={note.id} note={note} onDelete={this.onDelete}></NoteWrapper>
     })
   }
 
@@ -69,7 +71,6 @@ export default class NotesContainer extends Component {
         <ActionCable ref='noteChannel' channel={{channel: 'NoteChannel', room: '1', username: 'jeremy'}} onReceived={this.onReceived} />
         <input ref='newMessage' type='text' />
         <button onClick={this.sendMessage}>Create New Note</button>
-
         <Card.Group centered >
           {this.renderNotes()}
         </Card.Group>
