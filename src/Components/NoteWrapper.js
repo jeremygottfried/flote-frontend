@@ -52,7 +52,7 @@ export default class NoteWrapper extends Component {
   deleteNote = (event) => {
     event.preventDefault()
     event.stopPropagation()
-    this.props.onDelete(this.props.id)
+    this.props.onDelete(this.props.id, this.props.note.id)
   }
   render() {
     console.log(this.props.note)
