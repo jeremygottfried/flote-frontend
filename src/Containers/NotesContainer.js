@@ -10,8 +10,7 @@ export default class NotesContainer extends Component {
     notes: []
   }
 
-  onDelete = (id) =>{
-    const index = this.state.notes.filter(note => note.id === id)
+  onDelete = (index) =>{
     this.setState({
       notes: [...this.state.notes.slice(0,index), ...this.state.notes.slice(index+1)]
     })
@@ -62,9 +61,9 @@ export default class NotesContainer extends Component {
 
   renderNotes = () => {
 
-    return this.state.notes.filter(note => note.body.toLowerCase().includes(this.props.query.toLowerCase())).sort().map((note, index) => {
+    return this.state.notes.filter(note => note.body.toLowerCase().includes(this.props.query.toLowerCase())).map((note, index) => {
       console.log(note)
-      return <NoteWrapper onEdit={this.onEdit} id={note.id} key={index} note={note} onDelete={this.onDelete}></NoteWrapper>
+      return <NoteWrapper onEdit={this.onEdit} id={index} key={note.id} note={note} onDelete={this.onDelete}></NoteWrapper>
     })
   }
 
