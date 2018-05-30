@@ -38,7 +38,7 @@ export default class NoteWrapper extends Component {
       const index = this.props.id
 
       // Call perform or send
-      this.refs.realTimeTypingChannel.send({body, room, id, index, act})
+      this.refs.realTimeTypingChannel.send({ body, room, id, index})
   }
 
   SendEdit = (event) => {
@@ -53,7 +53,7 @@ export default class NoteWrapper extends Component {
   deleteNote = (event) => {
     event.preventDefault()
     event.stopPropagation()
-    this.props.onDelete(this.id)
+    this.props.onDelete(this.props.id, this.props.note.id)
   }
   render() {
     return(

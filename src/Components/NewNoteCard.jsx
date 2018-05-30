@@ -3,7 +3,7 @@ import { Modal, Card, Form } from 'semantic-ui-react'
 
 export default class NewNoteCard extends Component {
   state = {
-    body: ''
+    body: '',
   }
   handleChange = (event) => {
     this.setState({
@@ -19,9 +19,15 @@ export default class NewNoteCard extends Component {
       body: ''
     })
   }
+  enterHandler = (event) => {
+    console.log(event.key)
+    if (event.key === "Enter"){
+      this.state.body.trim() ? this.create : this.clear
+    }
+  }
   render(){
     return(
-      <Modal onClose={this.state.body.trim() ? this.create : this.clear} className="modal" size="fullscreen" trigger={
+      <Modal onKeyDown={this.enterHandler} onClose={this.state.body.trim() ? this.create : this.clear} className="modal" size="fullscreen" trigger={
         <Card className="wrap">
           <Card.Content><i className="large add icon"></i><Card.Description textAlign='center'>Add A New Note</Card.Description></Card.Content>
         </Card>

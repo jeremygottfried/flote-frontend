@@ -10,10 +10,12 @@ export default class NotesContainer extends Component {
     notes: []
   }
 
-  onDelete = (index) =>{
+  onDelete = (index, id) =>{
     this.setState({
       notes: [...this.state.notes.slice(0,index), ...this.state.notes.slice(index+1)]
     })
+    const act = 'delete'
+    this.refs.noteChannel.send({id, act})
   }
 
   onEdit = (note) => {
@@ -29,8 +31,9 @@ export default class NotesContainer extends Component {
   sendMessage = (body) => {
       const note = body
       const room = 'note_1'
+      const act = 'create'
       // Call perform or send
-      this.refs.noteChannel.send({note, room})
+      this.refs.noteChannel.send({note, room, act})
   }
 
 
