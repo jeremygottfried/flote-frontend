@@ -12,6 +12,9 @@ export default class NewNoteCard extends Component {
   }
   create = () => {
     this.props.createCard(this.state.body)
+    this.setState({
+      body: ''
+    })
   }
   render(){
     return(
