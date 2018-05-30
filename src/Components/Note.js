@@ -1,12 +1,10 @@
 import React, {Component} from 'react'
-import { Card, Modal, Image, Button, Header } from 'semantic-ui-react'
+import { Card, Modal } from 'semantic-ui-react'
 
 export default class Note extends Component {
 
   render(){
-    
     return(<div>
-
       <Modal onActionClick={this.props.SendEdit} className="modal" size="fullscreen" trigger={
         <Card>
           <Card.Content>{this.props.note}</Card.Content>

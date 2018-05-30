@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import { NavLink } from 'react-router-dom';
 import { Button, Form } from 'semantic-ui-react'
 
 export default class Login extends Component {
@@ -34,7 +33,7 @@ export default class Login extends Component {
       if(json.token){
       localStorage.setItem('token', json.token),
       localStorage.setItem('user_id', json.user_id),
-      localStorage.setItem('username', json.username)
+      localStorage.setItem('username', json.username),
       this.props.refresh()
     } else{
       this.setState({errors: "Mistake"})

@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import { NavLink } from 'react-router-dom';
 import {Menu} from 'semantic-ui-react'
 import Login from './Login'
 import RegistrationForm from './RegistrationForm'
