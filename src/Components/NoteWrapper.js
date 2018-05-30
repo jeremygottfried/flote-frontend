@@ -38,7 +38,7 @@ export default class NoteWrapper extends Component {
       const index = this.props.id
 
       // Call perform or send
-      this.refs.realTimeTypingChannel.send({body, room, id, index})
+      this.refs.realTimeTypingChannel.send({ body, room, id, index})
   }
 
   SendEdit = (event) => {
