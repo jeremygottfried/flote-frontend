@@ -32,30 +32,30 @@ export default class NoteWrapper extends Component {
   sendMessage = (note) => {
     console.log('sending')
       const body = note
-      const room = 'edit_1'
+      const room = 'note_1'
       const id = this.props.note.id
-
+      const act = "create"
       const index = this.props.id
 
       // Call perform or send
-      this.refs.realTimeTypingChannel.send({body, room, id, index})
+      this.refs.realTimeTypingChannel.send({body, room, id, index, act})
   }
 
   SendEdit = (event) => {
     console.log(event)
     const note = this.state.body
-    const room = 'note_1'
+    const room = this.props.note.id
     const id = this.props.note.id
+    const user = localStorage.getItem('username')
     // Call perform or send
-    this.refs.editChannel.send({note, room, id})
+    this.refs.editChannel.send({note, room, id, user})
   }
   deleteNote = (event) => {
     event.preventDefault()
     event.stopPropagation()
-    this.props.onDelete(this.props.id)
+    this.props.onDelete(this.id)
   }
   render() {
-    console.log(this.props.note)
     return(
         <Modal onClose={this.SendEdit} className="modal" size="fullscreen" trigger={
           <Card className="wrap">
