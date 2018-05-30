@@ -11,11 +11,13 @@ export default class NotesContainer extends Component {
   }
 
   onDelete = (index, id) =>{
-    this.setState({
-      notes: [...this.state.notes.slice(0,index), ...this.state.notes.slice(index+1)]
-    })
-    const act = 'delete'
-    this.refs.noteChannel.send({id, act})
+    if (this.state.notes && this.state.notes[index] && this.state.notes[index].id === id){
+      this.setState({
+        notes: [...this.state.notes.slice(0,index), ...this.state.notes.slice(index+1)]
+      })
+      const act = 'delete'
+      this.refs.noteChannel.send({id, index, act})
+    }
   }
 
   onEdit = (note) => {
@@ -38,13 +40,19 @@ export default class NotesContainer extends Component {
   }
 
 
-  onReceived = (note) => {
+  onReceived = (message) => {
+    if (message.act !== "delete") {
       this.setState({
-          notes: [note,
+          notes: [message,
               ...this.state.notes
           ]
       })
-      console.log(note)
+      console.log("notestatemessage", message)
+    } else {
+      this.onDelete(message.index, message.id)
+      console.log("deletemessage", message)
+    }
+
   }
 
   componentDidMount = () => {
