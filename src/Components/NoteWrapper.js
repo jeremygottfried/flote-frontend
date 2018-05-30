@@ -55,6 +55,7 @@ export default class NoteWrapper extends Component {
     this.props.onDelete(this.props.id)
   }
   render() {
+    console.log(this.props.note)
     return(
         <Modal onClose={this.SendEdit} className="modal" size="fullscreen" trigger={
           <Card className="wrap">

@@ -55,16 +55,15 @@ export default class NotesContainer extends Component {
     )
     .then(res => res.json())
     .then(noteArr => {
-      console.log(noteArr[0].notes)
+      console.log(noteArr)
       this.setState({notes: noteArr[0].notes})})
   }
 
   renderNotes = () => {
-
-    return this.state.notes.filter(note => note.body.toLowerCase().includes(this.props.query.toLowerCase())).map((note, index) => {
-      console.log(note)
+    // .filter(note => note.body.toLowerCase().includes(this.props.query.toLowerCase()))
+    return this.state.notes.map((note, index) => {
       return <NoteWrapper onEdit={this.onEdit} id={index} key={note.id} note={note} onDelete={this.onDelete}></NoteWrapper>
-    })
+    }).filter(element => element.props.note.body.toLowerCase().includes(this.props.query.toLowerCase()))
   }
 
   render(){
