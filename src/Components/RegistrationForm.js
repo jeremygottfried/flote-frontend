@@ -35,7 +35,7 @@ export default class RegistrationForm extends Component {
         localStorage.setItem('token', json.token),
         localStorage.setItem('user_id', json.user_id),
         localStorage.setItem('username', json.username)
-        this.props.history.push(`/notes`)
+        this.props.refresh()
       } else{
         this.setState({errors: "Mistake"})
       }

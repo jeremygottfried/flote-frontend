@@ -55,9 +55,8 @@ export default class NoteWrapper extends Component {
 
       <Modal onClose={this.SendEdit} className="modal" size="fullscreen" trigger={
         <Card>
-
-          <ActionCable ref='realTimeTypingChannel' channel={{channel: 'RealTimeTypingChannel', room: this.props.note.id, username: 'jeremy'}} onReceived={this.props.onEdit} />
-          <ActionCable ref='editChannel' channel={{channel: 'EditChannel', room: this.props.note.id, username: 'jeremy'}} />
+          <ActionCable ref='realTimeTypingChannel' channel={{channel: 'RealTimeTypingChannel', room: this.props.note.id, username: `${localStorage.getItem('username')}`}} onReceived={this.props.onEdit} />
+          <ActionCable ref='editChannel' channel={{channel: 'EditChannel', room: this.props.note.id, username: `${localStorage.getItem('username')}`}} />
           <Card.Content>{this.state.body}</Card.Content>
         </Card>
       }>
