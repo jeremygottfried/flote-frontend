@@ -22,7 +22,7 @@ export default class NotesContainer extends Component {
         notes:  [...this.state.notes.slice(0, note.index),
            note,
            ...this.state.notes.slice(note.index + 1)]
-      }, console.log(this.state.notes[note.index])
+      }
     )
   }
 
@@ -68,7 +68,7 @@ export default class NotesContainer extends Component {
   render(){
     return (
       <div>
-        <ActionCable ref='noteChannel' channel={{channel: 'NoteChannel', room: '1', username: 'jeremy'}} onReceived={this.onReceived} />
+        <ActionCable ref='noteChannel' channel={{channel: 'NoteChannel', room: `${localStorage.getItem('user_id')}`, username: `${localStorage.getItem('username')}`}} onReceived={this.onReceived} />
         <input ref='newMessage' type='text' />
         <button onClick={this.sendMessage}>Create New Note</button>
         <Card.Group centered >
