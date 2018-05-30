@@ -32,7 +32,7 @@ export default class NoteWrapper extends Component {
   sendMessage = (note) => {
     console.log('sending')
       const body = note
-      const room = 'edit_1'
+      const room = `edit_${this.props.note.id}`
       const id = this.props.note.id
 
       const index = this.props.id
@@ -44,7 +44,7 @@ export default class NoteWrapper extends Component {
   SendEdit = (event) => {
     console.log(event)
     const note = this.state.body
-    const room = 'note_1'
+    const room = `note_${this.props.note.id}`
     const id = this.props.note.id
     // Call perform or send
     this.refs.editChannel.send({note, room, id})
@@ -54,6 +54,7 @@ export default class NoteWrapper extends Component {
     event.stopPropagation()
     this.props.onDelete(this.props.id, this.props.note.id)
   }
+
   render() {
     console.log(this.props.note)
     return(
