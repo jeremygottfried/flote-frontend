@@ -23,7 +23,7 @@ export default class NewNoteCard extends Component {
           <Card.Content><i className="large add icon"></i><Card.Description textAlign='center'>Add A New Note</Card.Description></Card.Content>
         </Card>
       }>
-        <Modal.Header>Edit Post</Modal.Header>
+        <Modal.Header>Create New Post</Modal.Header>
         <Modal.Content>
           <Modal.Description>
             <Form>
