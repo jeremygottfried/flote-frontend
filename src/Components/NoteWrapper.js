@@ -5,6 +5,7 @@ export default class NoteWrapper extends Component {
 
   state = {
     body: this.props.note.body,
+    open: false
   }
 
   handleChange = (event) => {
@@ -30,7 +31,7 @@ export default class NoteWrapper extends Component {
   }
 
   sendMessage = (note) => {
-    console.log('sending')
+    // console.log('sending')
       const body = note
       const room = `edit_${this.props.note.id}`
       const id = this.props.note.id
@@ -50,29 +51,80 @@ export default class NoteWrapper extends Component {
     // Call perform or send
     this.refs.editChannel.send({note, room, id, user})
   }
+
   deleteNote = (event) => {
     event.preventDefault()
     event.stopPropagation()
     this.props.onDelete(this.props.id, this.props.note.id)
   }
 
+  open = () => this.setState({ open: true })
+
+  close = () => {
+    this.setState({ open: false })
+    this.SendEdit()
+  }
+
   render() {
+    // console.log(this.props.note)
+    const { open } = this.state
+    console.log(open)
     return(
-        <Modal onClose={this.SendEdit} className="modal" size="fullscreen" trigger={
-          <Card className="wrap">
-            <ActionCable ref='realTimeTypingChannel' channel={{channel: 'RealTimeTypingChannel', room: this.props.note.id, username: `${localStorage.getItem('username')}`}} onReceived={this.props.onEdit} />
-            <ActionCable ref='editChannel' channel={{channel: 'EditChannel', room: this.props.note.id, username: `${localStorage.getItem('username')}`}} />
-            <Card.Content><i className="left floated window close outline icon" onClick={this.deleteNote}></i>{this.state.body}</Card.Content>
-          </Card>
-        }>
+        <Modal
+          // open={open}
+          // onOpen={this.open}
+          // onClose={this.close}
+          className="modal"
+          size="fullscreen"
+          trigger={
+            <Card className="wrap">
+              <ActionCable
+                ref='realTimeTypingChannel'
+                channel={{
+                    channel: 'RealTimeTypingChannel',
+                    room: this.props.note.id,
+                    username: `${localStorage.getItem('username')}`
+                  }}
+                onReceived={this.props.onEdit}
+              />
+              <ActionCable
+                ref='editChannel'
+                channel={{
+                    channel: 'EditChannel',
+                    room: this.props.note.id,
+                    username: `${localStorage.getItem('username')}`
+                }}
+              />
+              <Card.Content>
+                <i
+                  className="left floated window close icon"
+                  onClick={this.deleteNote}
+                />
+                <br/>
+
+                {this.state.body}
+              </Card.Content>
+            </Card>
+          }
+        >
           <Modal.Header>Edit Post</Modal.Header>
           <Modal.Content>
             <Modal.Description>
               <Form>
-                <Form.Field control='textarea' rows='3' value={this.state.body} onChange={this.handleChange}/>
+                <Form.Field
+                  control='textarea'
+                  rows='3'
+                  value={this.state.body}
+                  onChange={this.handleChange}/>
               </Form>
             </Modal.Description>
           </Modal.Content>
+          {/* <Modal.Actions>
+            <Button
+              icon='check'
+              content='Done'
+              onClick={this.close} />
+          </Modal.Actions> */}
         </Modal>
 
     )

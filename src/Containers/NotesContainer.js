@@ -11,20 +11,30 @@ export default class NotesContainer extends Component {
   }
 
   onDelete = (index, id) =>{
-    this.setState({
-      notes: [...this.state.notes.slice(0,index), ...this.state.notes.slice(index+1)]
-    })
-    const act = 'delete'
-    this.refs.noteChannel.send({id, act})
+    const i = parseInt(index)
+    const ego = parseInt(id)
+    if (
+      this.state.notes
+      && this.state.notes[i]
+      && this.state.notes[i].id === ego
+    ) {
+      this.setState({
+        notes: [...this.state.notes.slice(0,i),
+          ...this.state.notes.slice(i+1)]
+      })
+      const act = 'delete'
+      this.refs.noteChannel.send({id, index, act})
+    }
   }
 
   onEdit = (note) => {
-    console.log('rt', note);
+    // console.log('rt', note);
+    // What is this? ↴↴↴↴↴↴↴↴↴
     // if (note.user !== localStorage.getItem('username'))
     this.setState({
-        notes:  [...this.state.notes.slice(0, note.index),
+        notes: [...this.state.notes.slice(0, note.index),
            note,
-           ...this.state.notes.slice(note.index + 1)]
+          ...this.state.notes.slice(note.index + 1)]
       }
     )
   }
@@ -38,17 +48,22 @@ export default class NotesContainer extends Component {
   }
 
 
-  onReceived = (note) => {
+  onReceived = (message) => {
+    if (message.act !== "delete") {
       this.setState({
-          notes: [note,
+          notes: [message,
               ...this.state.notes
           ]
       })
-      console.log(note)
+      // console.log("notestatemessage", message)
+    } else {
+      this.onDelete(message.index, message.id)
+      // console.log("deletemessage", message)
+    }
+
   }
 
   componentDidMount = () => {
-
     let user_id = localStorage.getItem('user_id')
     let token = localStorage.getItem('token')
     fetch(`http://localhost:4000/user/${user_id}/notes`, {
@@ -59,31 +74,44 @@ export default class NotesContainer extends Component {
     )
     .then(res => res.json())
     .then(noteArr => {
-      console.log(noteArr)
+      // console.log(noteArr)
       this.setState({notes: noteArr[0].notes})})
   }
 
   renderNotes = () => {
-    // .filter(note => note.body.toLowerCase().includes(this.props.query.toLowerCase()))
-    const filteredNotes = this.state.notes.map((note, index) => {
-      return <NoteWrapper onEdit={this.onEdit} id={index} key={note.id} note={note} onDelete={this.onDelete}></NoteWrapper>
-    }).filter(element => element.props.note.body.toLowerCase().includes(this.props.query.toLowerCase()));
-
-    console.log('filteredNotes', filteredNotes);
-
-    return filteredNotes;
+    return this.state.notes.map( (note, index) => {
+      return (
+        <NoteWrapper
+          onEdit={this.onEdit}
+          id={index}
+          key={note.id}
+          note={note}
+          onDelete={this.onDelete}
+        />)
+    }).filter( (element) => {
+      return element.props.note.body.toLowerCase().includes(
+        this.props.query.toLowerCase()
+      )});
   }
 
   render(){
     return (
       <div>
-        <ActionCable ref='noteChannel' channel={{channel: 'NoteChannel', room: `${localStorage.getItem('user_id')}`, username: `${localStorage.getItem('username')}`}} onReceived={this.onReceived} />
+        <ActionCable
+          ref='noteChannel'
+          channel={{
+            channel: 'NoteChannel',
+            room: `${localStorage.getItem('user_id')}`,
+            username: `${localStorage.getItem('username')}`
+          }}
+          onReceived={this.onReceived}
+        />
         <Card.Group centered className='notegroup'>
           <NewNoteCard createCard={this.sendMessage}/>
           {this.renderNotes()}
         </Card.Group>
       </div>
-  )
+    )
   }
 
 }
