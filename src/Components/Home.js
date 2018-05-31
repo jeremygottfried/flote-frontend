@@ -34,7 +34,6 @@ export default class Home extends Component {
             <Menu.Item name="register" active={activeItem === 'register'} onClick={this.handleRegisterClick}/>
           </Menu>
           {this.state.activeItem === 'login' ? <Login refresh={this.props.refresh}/> : <RegistrationForm refresh={this.props.refresh} />}
-
         </div>
       </div>
     )

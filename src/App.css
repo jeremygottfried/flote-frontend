@@ -48,6 +48,9 @@ a {
 a:hover {
     color: black;
 }
+{
+  color: blue;
+}
 i:hover {
     color: red;
 }
@@ -62,4 +65,7 @@ i:hover {
 .search {
   height:40px;
   margin: 11px;
+}
+.terms-and-conditions a{
+  color: blue;
 }

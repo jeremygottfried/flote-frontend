@@ -36,7 +36,7 @@ export default class Login extends Component {
         localStorage.setItem('username', json.username)
         this.props.refresh()
       } else {
-      this.setState({errors: "Mistake"})
+      this.setState({errors: "Invalid username or password."})
       }
     })
   }
@@ -60,12 +60,13 @@ export default class Login extends Component {
   }
 
   render(){
-    console.log(this.state.errors)
+    const errors = <h2>{this.state.errors}</h2>
     return (
       <Form onSubmit={ this.handleSubmit }>
+        {errors}
         <Form.Field>
           <label>Username</label>
-          <input placeholder='username'
+          <input placeholder='Username'
             type="text"
             onChange={ this.handleChange }
             value={ this.state.username }
@@ -74,7 +75,7 @@ export default class Login extends Component {
         </Form.Field>
         <Form.Field>
           <label>Password</label>
-          <input placeholder='password'
+          <input placeholder='Password'
             type="password"
             onChange={ this.handleChange }
             value={ this.state.password }
@@ -82,7 +83,7 @@ export default class Login extends Component {
             id="password"/>
         </Form.Field>
 
-        <Button type='submit'>Submit</Button>
+        <Button disabled={this.state.is_disabled} type='submit'>Submit</Button>
       </Form>
     )
   }
