@@ -31,7 +31,6 @@ export default class NoteWrapper extends Component {
   }
 
   sendMessage = (note) => {
-    // console.log('sending')
       const body = note
       const room = `edit_${this.props.note.id}`
       const id = this.props.note.id
@@ -43,7 +42,6 @@ export default class NoteWrapper extends Component {
   }
 
   SendEdit = (event) => {
-    console.log(event)
     const note = this.state.body
     const room = `save_${this.props.note.id}`
     const id = this.props.note.id
@@ -66,9 +64,7 @@ export default class NoteWrapper extends Component {
   }
 
   render() {
-    // console.log(this.props.note)
     const { open } = this.state
-    console.log(open)
     return(
         <Modal
           // open={open}

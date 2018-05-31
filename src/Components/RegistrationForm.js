@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom';
 
 import {Form, Checkbox, Button} from 'semantic-ui-react'
 export default class RegistrationForm extends Component {
@@ -35,7 +34,6 @@ export default class RegistrationForm extends Component {
     .then(res => res.json())
     .then(json => {
       if(json.token){
-        console.log(json);
         localStorage.setItem('token', json.token)
         localStorage.setItem('user_id', json.user_id)
         localStorage.setItem('username', json.username)
@@ -123,7 +121,7 @@ export default class RegistrationForm extends Component {
         </Form.Field>
         <Form.Field className="terms-and-conditions">
           <Checkbox
-            label={<label>I agree to the <a href="/">Terms and Conditions</a></label>}
+            label={<label>I agree to the Terms and Conditions</label>}
             onChange={this.handleChange}
           />
         </Form.Field>

@@ -28,8 +28,7 @@ export default class NotesContainer extends Component {
   }
 
   onEdit = (note) => {
-    // console.log('rt', note);
-    // What is this? ↴↴↴↴↴↴↴↴↴
+
     // if (note.user !== localStorage.getItem('username'))
     this.setState({
         notes: [...this.state.notes.slice(0, note.index),
@@ -55,10 +54,8 @@ export default class NotesContainer extends Component {
               ...this.state.notes
           ]
       })
-      // console.log("notestatemessage", message)
     } else {
       this.onDelete(message.index, message.id)
-      // console.log("deletemessage", message)
     }
 
   }
@@ -74,7 +71,6 @@ export default class NotesContainer extends Component {
     )
     .then(res => res.json())
     .then(noteArr => {
-      // console.log(noteArr)
       this.setState({notes: noteArr[0].notes})})
   }
 
