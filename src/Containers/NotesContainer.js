@@ -41,7 +41,7 @@ export default class NotesContainer extends Component {
 
   sendMessage = (body) => {
       const note = body
-      const room = 'note_1'
+      const room = `note_${localStorage.getItem('user_id')}`
       const act = 'create'
       // Call perform or send
       this.refs.noteChannel.send({note, room, act})
