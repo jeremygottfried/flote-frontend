@@ -34,24 +34,84 @@ class App extends Component {
         <header>
           <Menu secondary>
             <Menu.Item onClick={this.handleItemClick}>
-              {this.loggedIn() ? <NavLink to="/notes"><h1>Flote</h1></NavLink> : <NavLink to="/"><h1>Flote</h1></NavLink> }
+              {
+                this.loggedIn() ?
+                <NavLink to="/notes"><h1>Flote</h1></NavLink>
+                : <NavLink to="/"><h1>Flote</h1></NavLink>
+              }
             </Menu.Item>
             <Menu.Menu position='right'>
 
-              {this.loggedIn() ? <Input className='search' placeholder='Search...' value={this.state.query} onChange={this.searchChange}/> : null }
-              {this.loggedIn() ? <Menu.Item name='logout' onClick={this.logout} /> : null }
+              {
+                this.loggedIn() ?
+                <Input
+                  className='search'
+                  placeholder='Search...'
+                  value={this.state.query}
+                  onChange={this.searchChange}
+                />
+                : null
+              }
+              {
+                this.loggedIn() ?
+                <Menu.Item
+                  name='logout'
+                  onClick={this.logout}
+                />
+                : null
+              }
             </Menu.Menu>
           </Menu>
         </header>
           <Switch>
-            {this.loggedIn() ? <Route path='/' render={(props) => (<NotesContainer logout={this.logout} query={this.state.query} {...props}></NotesContainer>)}></Route> : <Route path="/" exact render={(props) => (<Home refresh={this.refresh}></Home>)}></Route>}
+            {
+              this.loggedIn() ?
+              <Route
+                path='/'
+                render={(props) => (
+                  <NotesContainer
+                    logout={this.logout}
+                    query={this.state.query}
+                    {...props}
+                  />
+                )}
+              />
+              :
+              <Route
+                path="/" exact
+                render={(props) => (
+                  <Home
+                    refresh={this.refresh}
+                  />
+                )}
+              />
+            }
 
-            <Route path="/login" render={(props => (<Login {...props}></Login>) )}></Route>
-            <Route path="/register" render={(props => (<RegistrationForm {...props}></RegistrationForm>) )}></Route>
-            {this.loggedIn() ?
-              <Route path='/notes' render={(props) => (<NotesContainer logout={this.logout} query={this.state.query} {...props}></NotesContainer>)}></Route>
-                :
-              <Redirect to="/"></Redirect>}
+            <Route
+              path="/login"
+              render={(props => (
+                <Login {...props} />
+              ))}
+            />
+            <Route
+              path="/register"
+              render={(props => (
+                <RegistrationForm {...props} />
+              ))}
+            />
+            {
+              this.loggedIn() ?
+              <Route
+                path='/notes'
+                render={(props) => (
+                  <NotesContainer
+                    logout={this.logout}
+                    query={this.state.query}
+                    {...props}
+                  />)}
+              />
+              : <Redirect to="/"></Redirect>
+            }
           </Switch>
       </div>
     );

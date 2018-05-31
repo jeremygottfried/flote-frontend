@@ -11,9 +11,14 @@ export default class NotesContainer extends Component {
   }
 
   onDelete = (index, id) =>{
-    if (this.state.notes && this.state.notes[index] && this.state.notes[index].id === id){
+    if (
+      this.state.notes
+      && this.state.notes[index]
+      && this.state.notes[index].id === id
+    ) {
       this.setState({
-        notes: [...this.state.notes.slice(0,index), ...this.state.notes.slice(index+1)]
+        notes: [...this.state.notes.slice(0,index),
+          ...this.state.notes.slice(index+1)]
       })
       const act = 'delete'
       this.refs.noteChannel.send({id, index, act})
@@ -21,12 +26,13 @@ export default class NotesContainer extends Component {
   }
 
   onEdit = (note) => {
-    console.log('rt', note);
+    // console.log('rt', note);
+    // What is this? ↴↴↴↴↴↴↴↴↴
     // if (note.user !== localStorage.getItem('username'))
     this.setState({
-        notes:  [...this.state.notes.slice(0, note.index),
+        notes: [...this.state.notes.slice(0, note.index),
            note,
-           ...this.state.notes.slice(note.index + 1)]
+          ...this.state.notes.slice(note.index + 1)]
       }
     )
   }
@@ -47,16 +53,15 @@ export default class NotesContainer extends Component {
               ...this.state.notes
           ]
       })
-      console.log("notestatemessage", message)
+      // console.log("notestatemessage", message)
     } else {
       this.onDelete(message.index, message.id)
-      console.log("deletemessage", message)
+      // console.log("deletemessage", message)
     }
 
   }
 
   componentDidMount = () => {
-
     let user_id = localStorage.getItem('user_id')
     let token = localStorage.getItem('token')
     fetch(`http://localhost:4000/user/${user_id}/notes`, {
@@ -67,18 +72,15 @@ export default class NotesContainer extends Component {
     )
     .then(res => res.json())
     .then(noteArr => {
-      console.log(noteArr)
+      // console.log(noteArr)
       this.setState({notes: noteArr[0].notes})})
   }
 
   renderNotes = () => {
-    // .filter(note => note.body.toLowerCase().includes(this.props.query.toLowerCase()))
     const filteredNotes = this.state.notes.map((note, index) => {
       return <NoteWrapper onEdit={this.onEdit} id={index} key={note.id} note={note} onDelete={this.onDelete}></NoteWrapper>
     }).filter(element => element.props.note.body.toLowerCase().includes(this.props.query.toLowerCase()));
-
-    console.log('filteredNotes', filteredNotes);
-
+    // console.log('filteredNotes', filteredNotes);
     return filteredNotes;
   }
 
@@ -91,7 +93,7 @@ export default class NotesContainer extends Component {
           {this.renderNotes()}
         </Card.Group>
       </div>
-  )
+    )
   }
 
 }
