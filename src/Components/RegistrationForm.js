@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import { Link } from 'react-router-dom';
+
 import {Form, Checkbox, Button} from 'semantic-ui-react'
 export default class RegistrationForm extends Component {
 
@@ -39,7 +41,7 @@ export default class RegistrationForm extends Component {
         localStorage.setItem('username', json.username)
         this.props.refresh()
       } else{
-        this.setState({errors: "Mistake"})
+        this.setState({errors: "That username has been taken"})
       }
 
     })
@@ -78,14 +80,14 @@ export default class RegistrationForm extends Component {
   }
 
   render(){
-    const errors = <p>{this.state.errors}</p>
+    const errors = <h2>{this.state.errors}</h2>
     return (
       <div>
       {errors}
       <Form onSubmit={ this.handleSubmit }>
         <Form.Field>
           <label htmlFor="name">Name </label>
-          <input placeholder='name' type="text"
+          <input placeholder='Name' type="text"
             onChange={ this.handleChange }
             value={ this.state.name }
             name="name"
@@ -93,7 +95,7 @@ export default class RegistrationForm extends Component {
         </Form.Field>
         <Form.Field>
           <label htmlFor="username">Username </label>
-          <input placeholder='username' type="text"
+          <input placeholder='Username' type="text"
             onChange={ this.handleChange }
             value={ this.state.username }
             name="username"
@@ -102,7 +104,7 @@ export default class RegistrationForm extends Component {
         <Form.Field>
           <label htmlFor="password">Password </label>
           <input
-            placeholder='password'
+            placeholder='Password'
             type="password"
             onChange={ this.handleChange }
             value={ this.state.password }
@@ -112,16 +114,16 @@ export default class RegistrationForm extends Component {
         <Form.Field>
           <label htmlFor="password"> Password Confirmation </label>
           <input
-            placeholder='password confirmation'
+            placeholder='Password Confirmation'
             type="password"
             onChange={ this.handleChange }
             value={ this.state.confirm }
             name="confirm"
             id="confirm" />
         </Form.Field>
-        <Form.Field>
+        <Form.Field className="terms-and-conditions">
           <Checkbox
-            label='I agree to the Terms and Conditions'
+            label={<label>I agree to the <a href="/">Terms and Conditions</a></label>}
             onChange={this.handleChange}
           />
         </Form.Field>
