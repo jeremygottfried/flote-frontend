@@ -32,9 +32,9 @@ export default class NoteWrapper extends Component {
   sendMessage = (note) => {
     console.log('sending')
       const body = note
-      const room = 'note_1'
+      const room = `edit_${this.props.note.id}`
       const id = this.props.note.id
-      const act = "create"
+
       const index = this.props.id
 
       // Call perform or send
@@ -44,7 +44,7 @@ export default class NoteWrapper extends Component {
   SendEdit = (event) => {
     console.log(event)
     const note = this.state.body
-    const room = this.props.note.id
+    const room = `save_${this.props.note.id}`
     const id = this.props.note.id
     const user = localStorage.getItem('username')
     // Call perform or send
@@ -55,6 +55,7 @@ export default class NoteWrapper extends Component {
     event.stopPropagation()
     this.props.onDelete(this.props.id, this.props.note.id)
   }
+
   render() {
     return(
         <Modal onClose={this.SendEdit} className="modal" size="fullscreen" trigger={

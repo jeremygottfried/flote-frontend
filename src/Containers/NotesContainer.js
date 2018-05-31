@@ -19,6 +19,7 @@ export default class NotesContainer extends Component {
   }
 
   onEdit = (note) => {
+    console.log('rt', note);
     // if (note.user !== localStorage.getItem('username'))
     this.setState({
         notes:  [...this.state.notes.slice(0, note.index),
@@ -64,9 +65,13 @@ export default class NotesContainer extends Component {
 
   renderNotes = () => {
     // .filter(note => note.body.toLowerCase().includes(this.props.query.toLowerCase()))
-    return this.state.notes.map((note, index) => {
+    const filteredNotes = this.state.notes.map((note, index) => {
       return <NoteWrapper onEdit={this.onEdit} id={index} key={note.id} note={note} onDelete={this.onDelete}></NoteWrapper>
-    }).filter(element => element.props.note.body.toLowerCase().includes(this.props.query.toLowerCase()))
+    }).filter(element => element.props.note.body.toLowerCase().includes(this.props.query.toLowerCase()));
+
+    console.log('filteredNotes', filteredNotes);
+
+    return filteredNotes;
   }
 
   render(){
