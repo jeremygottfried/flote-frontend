@@ -23,12 +23,13 @@ export default class NewNoteCard extends Component {
       body: ''
     })
   }
-  enterHandler = (event) => {
-    if (event.key === "Enter"){
-      this.state.body.trim() ? this.create : this.clear
-    }
-  }
-  
+  // Not Currently in use, but should be implemented in HOC Modal
+  // enterHandler = (event) => {
+  //   if (event.key === "Enter"){
+  //     this.state.body.trim() ? this.create : this.clear
+  //   }
+  // }
+
   render(){
     return(
       <Modal

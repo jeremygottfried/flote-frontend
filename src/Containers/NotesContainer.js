@@ -77,17 +77,33 @@ export default class NotesContainer extends Component {
   }
 
   renderNotes = () => {
-    const filteredNotes = this.state.notes.map((note, index) => {
-      return <NoteWrapper onEdit={this.onEdit} id={index} key={note.id} note={note} onDelete={this.onDelete}></NoteWrapper>
-    }).filter(element => element.props.note.body.toLowerCase().includes(this.props.query.toLowerCase()));
-    // console.log('filteredNotes', filteredNotes);
-    return filteredNotes;
+    return this.state.notes.map( (note, index) => {
+      return (
+        <NoteWrapper
+          onEdit={this.onEdit}
+          id={index}
+          key={note.id}
+          note={note}
+          onDelete={this.onDelete}
+        />)
+    }).filter( (element) => {
+      return element.props.note.body.toLowerCase().includes(
+        this.props.query.toLowerCase()
+      )});
   }
 
   render(){
     return (
       <div>
-        <ActionCable ref='noteChannel' channel={{channel: 'NoteChannel', room: `${localStorage.getItem('user_id')}`, username: `${localStorage.getItem('username')}`}} onReceived={this.onReceived} />
+        <ActionCable
+          ref='noteChannel'
+          channel={{
+            channel: 'NoteChannel',
+            room: `${localStorage.getItem('user_id')}`,
+            username: `${localStorage.getItem('username')}`
+          }}
+          onReceived={this.onReceived}
+        />
         <Card.Group centered className='notegroup'>
           <NewNoteCard createCard={this.sendMessage}/>
           {this.renderNotes()}

@@ -6,7 +6,7 @@ export default class RegistrationForm extends Component {
     name: "",
     username: "",
     password: "",
-    passwordConfirmation: "",
+    confirm: "",
     errors: "",
     accept: false,
     is_disabled: true,
@@ -34,8 +34,8 @@ export default class RegistrationForm extends Component {
     .then(json => {
       if(json.token){
         console.log(json);
-        localStorage.setItem('token', json.token),
-        localStorage.setItem('user_id', json.user_id),
+        localStorage.setItem('token', json.token)
+        localStorage.setItem('user_id', json.user_id)
         localStorage.setItem('username', json.username)
         this.props.refresh()
       } else{
@@ -49,13 +49,20 @@ export default class RegistrationForm extends Component {
     if (!event.target.name) {
       this.setAccept()
     } else {
-    this.setState({
-      [event.target.name]: event.target.value,
-    }, this.enabler)
+      this.setState({
+        [event.target.name]: event.target.value,
+      }, this.enabler)
+    }
   }
-  }
+
   enabler = () => {
-    if(this.state.username.length > 0 && this.state.password.length > 0 && this.state.name.length > 0 && (this.state.password === this.state.passwordConfirmation) && this.state.accept){
+    if(
+      this.state.username.length > 0
+      && this.state.password.length > 0
+      && this.state.name.length > 0
+      && (this.state.password === this.state.confirm)
+      && this.state.accept
+    ){
       this.setState({
         is_disabled: false
       })
@@ -63,11 +70,13 @@ export default class RegistrationForm extends Component {
         this.setState({is_disabled: true})
       }
   }
+
   setAccept = () => {
     this.setState({
       accept: !this.state.accept
     }, this.enabler)
   }
+
   render(){
     const errors = <p>{this.state.errors}</p>
     return (
@@ -101,19 +110,25 @@ export default class RegistrationForm extends Component {
             id="password" />
         </Form.Field>
         <Form.Field>
-          <label htmlFor="password">Password </label>
+          <label htmlFor="password"> Password Confirmation </label>
           <input
             placeholder='password confirmation'
             type="password"
             onChange={ this.handleChange }
-            value={ this.state.passwordConfirmation }
-            name="passwordConfirmation"
-            id="passwordConfirmation" />
+            value={ this.state.confirm }
+            name="confirm"
+            id="confirm" />
         </Form.Field>
         <Form.Field>
-          <Checkbox label='I agree to the Terms and Conditions' onChange={this.handleChange}/>
+          <Checkbox
+            label='I agree to the Terms and Conditions'
+            onChange={this.handleChange}
+          />
         </Form.Field>
-        <Button disabled={this.state.is_disabled} type="submit">Submit</Button>
+        <Button
+          disabled={this.state.is_disabled}
+          type="submit"> Submit
+        </Button>
       </Form>
     </div>)
   }

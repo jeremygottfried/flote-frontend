@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {ActionCable} from 'react-actioncable-provider'
-import { Card, Modal, Form, Button} from 'semantic-ui-react'
+import { Card, Modal, Form } from 'semantic-ui-react'
 export default class NoteWrapper extends Component {
 
   state = {

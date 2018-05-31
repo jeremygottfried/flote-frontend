@@ -31,13 +31,13 @@ export default class Login extends Component {
     .then(res => res.json())
     .then(json => {
       if(json.token){
-      localStorage.setItem('token', json.token),
-      localStorage.setItem('user_id', json.user_id),
-      localStorage.setItem('username', json.username),
-      this.props.refresh()
-    } else{
+        localStorage.setItem('token', json.token)
+        localStorage.setItem('user_id', json.user_id)
+        localStorage.setItem('username', json.username)
+        this.props.refresh()
+      } else {
       this.setState({errors: "Mistake"})
-    }
+      }
     })
   }
 
@@ -45,7 +45,10 @@ export default class Login extends Component {
     this.setState({
       [event.target.name]: event.target.value,
     }, () => {
-      if(this.state.username.length > 0 && this.state.password.length > 0){
+      if(
+        this.state.username.length > 0
+        && this.state.password.length > 0
+      ) {
         this.setState({
           is_disabled: false
         })
@@ -57,7 +60,7 @@ export default class Login extends Component {
   }
 
   render(){
-    const errors = <p>{this.state.errors}</p>
+    console.log(this.state.errors)
     return (
       <Form onSubmit={ this.handleSubmit }>
         <Form.Field>
