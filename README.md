@@ -9,7 +9,7 @@ Flote is designed to make task listing and note taking that much easier.
 We want to bring people even closer with live communication between a group of coworkers. 
 
 ## Screenshot Gif 
-<img src='https://github.com/jeremygottfried/flote-frontend/blob/master/Flote%20.mp4.gif' alt='gif' width=1000>
+<img src='https://github.com/jeremygottfried/flote-frontend/blob/master/Flote.mp4.gif' alt='gif' width=1000>
 
 ## Tech/Frameworks Used 
 -React and React Native frontends
